@@ -15,18 +15,21 @@ This document is the **Portable Project Memory System** for EduRescue.
 
 Bangladesh-এর SSC / HSC / University / Job-exam students যেন:
 
-- ২৪/৭ সময়ে **academic emergency** অবস্থায়  
+- ২৪/৭ সময়ে academic emergency অবস্থায় থাকে না, কারণ তারা instant help পায়  
 - দ্রুত **AI first answer** এবং প্রয়োজনে **human expert verified answer** পায়  
-- এক জায়গাতেই problem → solution → saved notes → revision করতে পারে  
+- এক জায়গাতেই **problem → solution → saved notes → revision** করতে পারে  
 
 ### 1.3 Target Users
 
-- **Primary:**  
-  - SSC / HSC / University students (Bangladesh, Bangla-first, phone-first)
-- **Secondary:**  
-  - Job exam aspirants  
-  - Subject experts / teachers (as “Experts”)  
-  - Light Admin / Ops user (monitor tickets, manage experts/resources)
+**Primary:**
+
+- SSC / HSC / University students (Bangladesh, Bangla-first, phone-first)
+
+**Secondary:**
+
+- Job exam aspirants  
+- Subject experts / teachers (as “Experts”)  
+- Light Admin / Ops users (monitor tickets, manage experts/resources)
 
 ### 1.4 Problem Statement
 
@@ -40,7 +43,7 @@ Students:
 EduRescue solves:
 
 - **Panic → AI answer → optional emergency escalation → verified answer**  
-- All within a single, calm, focused interface.  
+- সবকিছু এক জায়গায়, একটাই calm, focused interface-এর মধ্যে  
 
 ### 1.5 One-line Pitch
 
@@ -61,16 +64,16 @@ Routes (Next.js App Router):
 - `/student/notes` – Saved Notes from verified answers  
 - `/student/resources` – Curated Resources (syllabus, formula sheets, key links)  
 - `/student/dashboard` – Light overview (quick entry into chat & tickets)  
-- `/student/conversations/[id]` – Specific conversation view (optional if assistant page already shows details)
+- `/student/conversations/[id]` – Specific conversation view (optional if assistant page already shows details)  
 
 #### Expert Area (MVP)
 
 - `/expert/inbox` – Ticket queue (REQUESTED / ASSIGNED / IN_REVIEW)  
-- `/expert/conversations/[id]` – Conversation + ticket detail + verify UI
+- `/expert/conversations/[id]` – Conversation + ticket detail + verify UI  
 
 #### Admin/Ops (Post-MVP / simple)
 
-- `/admin` or `/expert/admin` – Basic ticket overview, exports, expert management (can be very minimal initially)
+- `/admin` বা `/expert/admin` – Basic ticket overview, exports, expert management (minimum viable)
 
 ---
 
@@ -98,7 +101,7 @@ Routes (Next.js App Router):
 
 **Platform:**
 
-- Basic roles: STUDENT / EXPERT / ADMIN  
+- Basic roles: `STUDENT` / `EXPERT` / `ADMIN`  
 - Prisma schema in place  
 - Minimal API endpoints for chat + tickets + notes  
 
@@ -108,7 +111,7 @@ Routes (Next.js App Router):
 - Simple analytics for Ops (number of tickets, response time)  
 - Basic student history: list of past conversations in assistant  
 - More polished Resources (category filters, tags)  
-- Basic mobile optimizations & offline handling (as much as feasible)
+- Basic mobile optimizations & offline handling (as feasible)  
 
 #### Future (vision)
 
@@ -116,7 +119,7 @@ Routes (Next.js App Router):
 - Group sessions / live classes for trending panic topics  
 - Recommendation engine for weak topics  
 - Exam-specific bundles (e.g., “HSC Accounting Crash Help”)  
-- Paid tiers / subscription plans (with usage counters & limits)
+- Paid tiers / subscription plans (with usage counters & limits)  
 
 ---
 
@@ -127,9 +130,8 @@ Routes (Next.js App Router):
 - `StudentShell` – Overall student layout (sidebar + topbar + content)  
 - `StudentSidebar` – Nav items (Dashboard, Assistant, Emergency, Resources, Notes)  
 - `StudentTopbar` – Greeting, minimal profile controls  
-
 - `ExpertShell` – Expert layout (sidebar/topbar)  
-- `ExpertSidebar` / `ExpertTopbar` – Ticket navigation
+- `ExpertSidebar` / `ExpertTopbar` – Ticket navigation  
 
 **Assistant components:**
 
@@ -157,7 +159,7 @@ Routes (Next.js App Router):
 **UI atoms (shadcn/ui style):**
 
 - `Button`, `Card`, `Badge`, `EmptyState`, `Input`, `Textarea`, `Modal`  
-- `Toaster` / Notifications (`sonner` based)  
+- `Toaster` / Notifications (sonner based)  
 
 ---
 
@@ -169,21 +171,22 @@ Routes (Next.js App Router):
 2. Types question + optionally uploads an image.  
 3. System creates `Conversation` (if new) and student `Message`.  
 4. AI is called; AI `Message` is saved & shown in chat.  
-5. Student feels unsure → clicks “Need Human Help?”  
+5. Student feels unsure → clicks “Need Human Help?”.  
 6. System creates `EmergencyTicket` linked to that `Conversation`.  
-7. Expert sees ticket in `/expert/inbox` (REQUESTED).  
-8. Expert opens conversation, writes verified explanation (EXPERT `Message`).  
-9. Ticket marked VERIFIED; student sees expert answer in the same chat, plus updated ticket status in `/student/emergency`.  
-10. Student clicks “Save as Note” → Note created, appears in `/student/notes`.
+7. Expert sees ticket in `/expert/inbox` (status: REQUESTED).  
+8. Expert opens conversation → sees full history (student + AI).  
+9. Expert writes verified explanation (EXPERT `Message`) and marks ticket VERIFIED.  
+10. Student sees expert answer in the same chat, plus updated ticket status in `/student/emergency`.  
+11. Student clicks “Save as Note” → `Note` created, appears in `/student/notes`.  
 
 #### Expert Flow
 
 1. Expert logs in → lands on `/expert/inbox`.  
 2. Sees list of tickets with status & time.  
 3. Clicks one → `/expert/conversations/[id]` view: full context (student msgs + AI msgs).  
-4. Claims ticket (`ASSIGNED`), moves to `IN_REVIEW`.  
-5. Writes verified answer → ticket status `VERIFIED`.  
-6. Optionally closes ticket after some time (`CLOSED`).  
+4. Claims ticket (status → ASSIGNED), then moves to IN_REVIEW.  
+5. Writes verified answer → ticket status → VERIFIED.  
+6. Optionally closes ticket after some time → CLOSED.  
 
 ---
 
@@ -214,32 +217,32 @@ Routes (Next.js App Router):
 ```txt
 app/
   (auth)/
-    login/page.tsx          -> /login
-    register/page.tsx       -> /register
+    login/page.tsx                -> /login
+    register/page.tsx             -> /register
 
   (student)/
     student/
-      layout.tsx            -> shared layout for all /student routes
-      assistant/page.tsx    -> /student/assistant
-      emergency/page.tsx    -> /student/emergency
-      notes/page.tsx        -> /student/notes
-      resources/page.tsx    -> /student/resources
-      dashboard/page.tsx    -> /student/dashboard
+      layout.tsx                  -> shared layout for all /student routes
+      assistant/page.tsx          -> /student/assistant
+      emergency/page.tsx          -> /student/emergency
+      notes/page.tsx              -> /student/notes
+      resources/page.tsx          -> /student/resources
+      dashboard/page.tsx          -> /student/dashboard
       conversations/[id]/page.tsx -> /student/conversations/:id
 
   (expert)/
     expert/
-      layout.tsx            -> shared layout for all /expert routes
-      inbox/page.tsx        -> /expert/inbox
+      layout.tsx                  -> shared layout for all /expert routes
+      inbox/page.tsx              -> /expert/inbox
       conversations/[id]/page.tsx -> /expert/conversations/:id
 
   api/
     ... (see API list below)
-
 3.2 DB Schema (Prisma)
-
 Canonical schema (dev = SQLite, prod = Postgres):
 
+prisma
+Copy code
 generator client {
   provider = "prisma-client-js"
 }
@@ -367,9 +370,7 @@ model Resource {
   createdAt   DateTime @default(now())
   updatedAt   DateTime @updatedAt
 }
-
 3.3 API List (Logical Operations + Suggested Routes)
-
 Auth / User
 
 auth.login → POST /api/auth/login
@@ -437,47 +438,43 @@ resources.list → GET /api/resources
 resources.get → GET /api/resources/[id]
 
 3.4 State Logic (High-level)
-
 Server state:
 
 Conversations, messages, tickets, notes, resources → Prisma + DB
 
-All mutations go through the API routes above
+সব mutation যাবে API routes দিয়ে (উপরের লিস্ট)
 
 Client state (MVP):
 
-Local React useState for message list in the assistant view (can be hydrated from messages.list)
+Assistant view-তে message list-এর জন্য local React useState (hydrated from messages.list)
 
-Simple optimistic update for new messages
+New message-এর জন্য simple optimistic update
 
-Emergency escalation button triggers API, then UI refresh (re-fetch tickets or use returned payload)
+Emergency button → API call → UI refresh (re-fetch tickets or use returned payload)
 
 Auth state:
 
 Session via NextAuth (or similar)
 
-Each API checks session.user.role (STUDENT / EXPERT / ADMIN)
+প্রতিটি API তে session.user.role (STUDENT / EXPERT / ADMIN) দেখে authorization
 
 Error handling (MVP):
 
-API routes return clear error messages
+API routes clear error message রিটার্ন করবে
 
-UI shows toast (sonner) for failure (e.g., ticket creation failed)
+UI side sonner toast দিয়ে failure দেখাবে (e.g., ticket creation failed)
 
 Section 04: Figma & UI Links
-
-NOTE: Fill in with your real links & IDs.
+NOTE: Fill in with your real links & IDs as needed.
 
 4.1 Main Figma File
-
 Figma Site / Prototype:
 
 https://edurescue.figma.site/
 
-(Inside this, you can have pages like “Student Dashboard”, “AI Assistant”, “Emergency”, etc.)
+(Inside this, pages like “Student Dashboard”, “AI Assistant”, “Emergency”, etc.)
 
 4.2 Figma Frames (suggested list)
-
 Student – AI Assistant (Home)
 
 Student – Emergency Tickets
@@ -490,11 +487,10 @@ Expert – Inbox
 
 Expert – Conversation & Verify
 
-(Replace with your real frame names.)
+(নিজের আসল frame নাম দিয়ে update করবে।)
 
 4.3 Design System Tokens
-
-Keep a section in Figma (and optionally here) for:
+Figma-তে (এবং চাইলে এখানে) আলাদা section রাখো:
 
 Color tokens:
 
@@ -508,11 +504,8 @@ Spacing / radius:
 
 radius-lg, radius-xl, spacing-sm, spacing-md
 
-You can maintain a small table here if needed.
-
 4.4 Screenshots (optional)
-
-Add a /docs/ui/ folder in repo and link:
+Repo-তে /docs/ui/ folder বানিয়ে link করতে পারো:
 
 docs/ui/student-assistant.png
 
@@ -521,13 +514,13 @@ docs/ui/student-emergency.png
 docs/ui/expert-inbox.png
 
 Section 05: ChatGPT Prompts (Master Prompts)
-
 এগুলোই তোমার Portable AI Roles. নতুন কোনো chat এ একেকটা prompt use করে ওই role-টা recreate করবে।
 
 5.1 Chat 01 → Founder HQ (FounderOS v3.0)
-
 Use as system / first message in a new “Founder HQ” chat:
 
+text
+Copy code
 You are Founder HQ (FounderOS v3.0) — my AI Co-Founder, Chief of Staff, Master Prompt Engineer, Systems Thinker, and Execution Engine for the EduRescue project.
 
 Your job:
@@ -576,8 +569,9 @@ Context:
 - EduRescue is a 24/7 academic emergency platform for Bangladeshi students.
 - Core = AI Assistant (default) + Emergency Help (escalation).
 - Use the attached Project Wiki as the single source of truth.
-
 5.2 Chat 02 → Worldclass Architect
+text
+Copy code
 You are “EduRescue Worldclass System Architect v1.0”.
 
 Mission:
@@ -610,8 +604,9 @@ Constraints:
 
 First task:
 Review the Project Wiki and restate EduRescue v1 in your own words, then list any open technical questions you need answered.
-
 5.3 Chat 03 → Frontend Builder (Next.js + Tailwind)
+text
+Copy code
 You are “EduRescue Frontend Builder v1.0” — a senior Next.js 14 + React + TypeScript + Tailwind engineer.
 
 Mission:
@@ -642,8 +637,9 @@ Output format:
 
 First task:
 Using the Project Wiki, implement the student shell + AI Assistant page skeleton for /student/assistant (no real data yet, mocked messages are fine).
-
 5.4 Chat 04 → Backend + Debug + Testing + Deploy Specialist
+text
+Copy code
 You are “EduRescue Backend, Debug, Testing & Deploy Specialist v1.0”.
 
 Mission:
@@ -655,7 +651,7 @@ Own the backend of EduRescue v1:
 - Deploy strategy (e.g., Vercel + managed Postgres)
 
 Responsibilities:
-1) Keep `prisma/schema.prisma` aligned with the Wiki.
+1) Keep prisma/schema.prisma aligned with the Wiki.
 2) Implement API endpoints described in Section 3.3.
 3) Help diagnose and fix runtime/TypeScript errors.
 4) Propose minimal tests for critical flows (chat send, emergency escalate, verify).
@@ -677,14 +673,8 @@ You respond with:
 
 Constraints:
 - No heavy infra; keep it simple.
-- Make it easy for a single dev to run: `npm install`, `npx prisma migrate dev`, `npm run dev`.
+- Make it easy for a single dev to run: npm install, npx prisma migrate dev, npm run dev.
 
 First task:
 Review the Project Wiki schema + API list and propose the first 3 API routes we should implement for a working chat + emergency flow.
-
-
-End of Portable Project Memory Wiki.
-
-
----
-
+End of Portable Project Memory Wiki
