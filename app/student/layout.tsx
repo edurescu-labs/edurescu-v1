@@ -15,6 +15,14 @@ export default function StudentLayout({
           <ul className="space-y-2">
             <li>
               <a
+                href="/student/dashboard"
+                className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg"
+              >
+                Dashboard
+              </a>
+            </li>
+            <li>
+              <a
                 href="/student/assistant"
                 className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg"
               >
@@ -26,15 +34,7 @@ export default function StudentLayout({
                 href="/student/emergency"
                 className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg"
               >
-                Emergency
-              </a>
-            </li>
-            <li>
-              <a
-                href="/student/notes"
-                className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg"
-              >
-                Notes
+                Emergency Help
               </a>
             </li>
             <li>
@@ -47,10 +47,10 @@ export default function StudentLayout({
             </li>
             <li>
               <a
-                href="/student/dashboard"
+                href="/student/notes"
                 className="block px-4 py-2 text-gray-700 hover:bg-blue-50 hover:text-blue-600 rounded-lg"
               >
-                Dashboard
+                Notes
               </a>
             </li>
           </ul>
