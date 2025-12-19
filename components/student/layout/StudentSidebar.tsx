@@ -11,11 +11,11 @@ import {
 } from 'lucide-react'
 
 const navItems = [
-  { href: '/student/assistant', label: 'AI Assistant', icon: MessageSquare },
-  { href: '/student/emergency', label: 'Emergency Help', icon: AlertCircle },
-  { href: '/student/notes', label: 'My Notes', icon: BookOpen },
-  { href: '/student/resources', label: 'Resources', icon: Library },
-  { href: '/student/dashboard', label: 'Dashboard', icon: LayoutDashboard },
+  { href: '/assistant', label: 'AI Assistant', icon: MessageSquare },
+  { href: '/emergency', label: 'Emergency Help', icon: AlertCircle },
+  { href: '/notes', label: 'My Notes', icon: BookOpen },
+  { href: '/resources', label: 'Resources', icon: Library },
+  { href: '/dashboard', label: 'Dashboard', icon: LayoutDashboard },
 ]
 
 export function StudentSidebar() {
