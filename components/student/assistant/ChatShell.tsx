@@ -5,7 +5,7 @@ import { ChatEmptyState } from './ChatEmptyState'
 import { ChatComposer } from './ChatComposer'
 
 export function ChatShell() {
-  const [messages, setMessages] = useState([])
+  const [messages, setMessages] = useState<string[]>([])
 
   const handleSend = async (text: string) => {
     // Mock implementation - real API comes later

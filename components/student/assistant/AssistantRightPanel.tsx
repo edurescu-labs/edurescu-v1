@@ -36,7 +36,7 @@ export function AssistantRightPanel() {
             <span className="font-semibold">45/100</span>
           </div>
           <div className="h-2 bg-gray-200 rounded-full overflow-hidden">
-            <div className="h-full bg-blue-600" style={{ width: '45%' }} />
+            <div className="h-full bg-blue-600 w-[45%]" />
           </div>
           <p className="text-xs text-gray-500">55 questions left</p>
           <button className="w-full mt-2 text-sm text-blue-600 hover:text-blue-700 font-medium">
@@ -54,9 +54,9 @@ export function AssistantRightPanel() {
           <h3 className="font-semibold text-gray-900">Suggested Prompts</h3>
         </div>
         <div className="flex flex-wrap gap-2">
-          {suggestedPrompts.map((prompt, i) => (
+          {suggestedPrompts.map((prompt) => (
             <button
-              key={i}
+              key={prompt}
               className="text-xs px-3 py-1.5 bg-gray-100 hover:bg-gray-200 rounded-full text-gray-700"
             >
               {prompt}
@@ -74,9 +74,9 @@ export function AssistantRightPanel() {
           <h3 className="font-semibold text-gray-900">Recent Chats</h3>
         </div>
         <div className="space-y-2">
-          {recentChats.map((chat, i) => (
+          {recentChats.map((chat) => (
             <button
-              key={i}
+              key={chat.title}
               className="w-full text-left p-3 rounded-lg hover:bg-gray-50 transition-colors"
             >
               <div className="font-medium text-sm text-gray-900">{chat.title}</div>
